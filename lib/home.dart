@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:tictactoe/theme.dart';
 import 'package:confetti/confetti.dart';
 
-
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -38,36 +37,9 @@ class _HomeState extends State<Home> {
 
   int filledbox = 0;
 
-   late ConfettiController _controllerCenter;
-  late ConfettiController _controllerCenterRight;
-  late ConfettiController _controllerCenterLeft;
-  late ConfettiController _controllerTopCenter;
-  late ConfettiController _controllerBottomCenter;
-
   @override
   void initState() {
     super.initState();
-     _controllerCenter =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerCenterRight =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerCenterLeft =
-        ConfettiController(duration: const Duration(seconds: 10));
-    _controllerTopCenter =
-        ConfettiController(duration: const Duration(milliseconds: 500));
-    _controllerBottomCenter =
-        ConfettiController(duration: const Duration(seconds: 10));
-
-  }
-
-  @override
-  void dispose() {
-    _controllerCenter.dispose();
-    _controllerCenterRight.dispose();
-    _controllerCenterLeft.dispose();
-    _controllerTopCenter.dispose();
-    _controllerBottomCenter.dispose();
-    super.dispose();
   }
 
   @override
@@ -80,17 +52,8 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
-              ConfettiWidget(
-              confettiController: _controllerTopCenter,
-              blastDirection:  90,
-              maxBlastForce: 20, // set a lower max blast force
-              minBlastForce: 5, // set a lower min blast force
-              emissionFrequency:0.2,
-              numberOfParticles: 20, // a lot of particles at once
-              gravity: 1,
-            ),
               const Text(
                 'Tic Tac Toe',
                 style: MyTheme.heading,
@@ -135,10 +98,9 @@ class _HomeState extends State<Home> {
                   )
                 ],
               ),
-           const   SizedBox(
-                height: 10,
+              const SizedBox(
+                height: 30,
               ),
-              
               Expanded(
                 child: GridView.builder(
                     itemCount: 9,
@@ -189,13 +151,15 @@ class _HomeState extends State<Home> {
               ),
               TextButton(
                   onPressed: () {
-                    celebrate();
                     clearboard();
                     p1score = 0;
                     p2score = 0;
                     isoturn = false;
                   },
-                  child: Text('Reset',style: MyTheme.body1,))
+                  child: Text(
+                    'Reset',
+                    style: MyTheme.body1,
+                  ))
             ],
           ),
         ),
@@ -208,23 +172,18 @@ class _HomeState extends State<Home> {
     if (displayelement[0] == displayelement[1] &&
         displayelement[0] == displayelement[2] &&
         displayelement[0] != '') {
-          celebrate();
       showwinnerdialog(context, displayelement[0]);
     }
 
     if (displayelement[3] == displayelement[4] &&
         displayelement[3] == displayelement[5] &&
         displayelement[3] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[3]);
     }
 
     if (displayelement[6] == displayelement[7] &&
         displayelement[6] == displayelement[8] &&
         displayelement[6] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[6]);
     }
 
@@ -233,24 +192,18 @@ class _HomeState extends State<Home> {
     if (displayelement[0] == displayelement[3] &&
         displayelement[0] == displayelement[6] &&
         displayelement[0] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[0]);
     }
 
     if (displayelement[1] == displayelement[4] &&
         displayelement[1] == displayelement[7] &&
         displayelement[1] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[1]);
     }
 
     if (displayelement[2] == displayelement[5] &&
         displayelement[2] == displayelement[8] &&
         displayelement[2] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[2]);
     }
 
@@ -259,16 +212,12 @@ class _HomeState extends State<Home> {
     if (displayelement[0] == displayelement[4] &&
         displayelement[0] == displayelement[8] &&
         displayelement[0] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[0]);
     }
 
     if (displayelement[2] == displayelement[4] &&
         displayelement[2] == displayelement[6] &&
         displayelement[2] != '') {
-          celebrate();
-
       showwinnerdialog(context, displayelement[2]);
     }
 
@@ -276,10 +225,6 @@ class _HomeState extends State<Home> {
       print('game draw');
       showwinnerdialog(context, "", isdraw: true);
     }
-  }
-
-  celebrate(){
-    _controllerTopCenter.play();
   }
 
   showwinnerdialog(BuildContext context, String player, {bool isdraw = false}) {
@@ -290,10 +235,10 @@ class _HomeState extends State<Home> {
         style: MyTheme.buttontext,
       ),
       onPressed: () {
-        if (player == 'x') {
+        if (player == 'x' && filledbox != 9) {
           isoturn = false;
           p2score++;
-        } else {
+        } else if (filledbox != 9) {
           isoturn = true;
           p1score++;
         }
