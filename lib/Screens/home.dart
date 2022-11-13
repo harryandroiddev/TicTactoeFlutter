@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:tictactoe/theme.dart';
 import 'package:confetti/confetti.dart';
 
+import '../CustomWidgets/playerscore.dart';
+
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -12,10 +14,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int id = 0;
-
   int p1score = 0;
   int p2score = 0;
+  bool isdrawn = false;
 
   List<String> displayelement = [
     "",
@@ -38,11 +39,6 @@ class _HomeState extends State<Home> {
   int filledbox = 0;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyTheme.bgcolor,
@@ -61,43 +57,8 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        'Player 0',
-                        style: MyTheme.body1.copyWith(
-                            color: isoturn
-                                ? MyTheme.primarycolor
-                                : MyTheme.disablecolor),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '$p1score',
-                          style: MyTheme.body1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text('Player X',
-                          style: MyTheme.body1.copyWith(
-                            color: isoturn
-                                ? MyTheme.disablecolor
-                                : MyTheme.primarycolor,
-                          )),
-                      Text(
-                        '$p2score',
-                        style: MyTheme.body1,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              PlayerWidget(
+                  isoturn: isoturn, p1score: p1score, p2score: p2score),
               const SizedBox(
                 height: 30,
               ),
@@ -173,18 +134,21 @@ class _HomeState extends State<Home> {
         displayelement[0] == displayelement[2] &&
         displayelement[0] != '') {
       showwinnerdialog(context, displayelement[0]);
+      return;
     }
 
     if (displayelement[3] == displayelement[4] &&
         displayelement[3] == displayelement[5] &&
         displayelement[3] != '') {
       showwinnerdialog(context, displayelement[3]);
+      return;
     }
 
     if (displayelement[6] == displayelement[7] &&
         displayelement[6] == displayelement[8] &&
         displayelement[6] != '') {
       showwinnerdialog(context, displayelement[6]);
+      return;
     }
 
     //check column
@@ -193,18 +157,21 @@ class _HomeState extends State<Home> {
         displayelement[0] == displayelement[6] &&
         displayelement[0] != '') {
       showwinnerdialog(context, displayelement[0]);
+      return;
     }
 
     if (displayelement[1] == displayelement[4] &&
         displayelement[1] == displayelement[7] &&
         displayelement[1] != '') {
       showwinnerdialog(context, displayelement[1]);
+      return;
     }
 
     if (displayelement[2] == displayelement[5] &&
         displayelement[2] == displayelement[8] &&
         displayelement[2] != '') {
       showwinnerdialog(context, displayelement[2]);
+      return;
     }
 
     //check diagonal
@@ -213,12 +180,14 @@ class _HomeState extends State<Home> {
         displayelement[0] == displayelement[8] &&
         displayelement[0] != '') {
       showwinnerdialog(context, displayelement[0]);
+      return;
     }
 
     if (displayelement[2] == displayelement[4] &&
         displayelement[2] == displayelement[6] &&
         displayelement[2] != '') {
       showwinnerdialog(context, displayelement[2]);
+      return;
     }
 
     if (filledbox == 9) {

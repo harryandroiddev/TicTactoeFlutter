@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tictactoe/home.dart';
+import 'package:tictactoe/Screens/home.dart';
 
 void main() {
   runApp(const MyApp());
